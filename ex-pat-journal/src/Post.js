@@ -1,8 +1,12 @@
-import React from 'react'
+import React, { useState } from "react";
+
+const initialIsEditing = false;
 
 function Post(){
+    const [isEditing, setIsEditing] = useState(initialIsEditing)
     return(
-        <p>A Post</p>
+        isEditing ? <p>A Post Form</p> :
+        <p>a Completed Post</p>
     )
 }
 
