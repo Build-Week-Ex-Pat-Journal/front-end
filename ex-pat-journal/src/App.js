@@ -45,20 +45,60 @@ function LoginForm() {
 const [loginDisabled, setLoginDisabled] = useState(initialLoginDisabled);
 const [loginErrors, setLoginErrors] = useState(initialLoginErrors)
 const [loginFormValues, setLoginFormValues] = useState(initialLoginFormValues)
+const [user, setUser] = useState("")
 //////////////// HELPERS ////////////////
 
 //////////////// EVENT HANDLERS ////////////////
+const loginInputChange = (name, value) => {
+  yup
+  .reach(loginschema, name)
+  .validate(value) // validate this value
+     .then(() => {
+       // happy path and clear the error
+       setLoginErrors({
+         ...loginErrors,
+         [name]: "",
+       });
+     })
+     // if the validation is unsuccessful, we can set the error message to the message
+     // returned from yup (that we created in our schema)
+     .catch((err) => {
+       setLoginErrors({
+         ...loginErrors,
+         // validation error from schema
+         [name]: err.errors[0],
+       });
+     });
 
-//////////////// SIDE EFFECTS ////////////////  
+     setLoginFormValues({
+       ...loginFormValues,
+       [name]: value, // NOT AN ARRAY
+     });
+}
+
+const onChange = (evt) => {
+  const { name, value } = evt.target;
+  loginInputChange(name, value)
+}
+//////////////// SIDE EFFECTS ////////////////
+useEffect(() => {
+  loginschema.isValid(loginFormValues).then((valid) => {
+    setLoginDisabled(!valid);
+  });
+}, [loginFormValues]);  
 
   return(
   <div className= "Form">
+      <div className="errors">
+      {loginErrors.username}<br/>
+      {loginErrors.password}<br/>
+      </div>
       <form className = "form container">
         <label>
         Username: 
         <input
-        value="#"
-        onChange="#"
+        value={loginFormValues.username}
+        onChange={onChange}
         name="username"
         type="text"
         />
@@ -66,14 +106,15 @@ const [loginFormValues, setLoginFormValues] = useState(initialLoginFormValues)
         <label>
         Password: 
         <input
-        value="#"
-        onChange="#"
+        value={loginFormValues.password}
+        onChange={onChange}
         name="password"
         type="text"
         />
         </label>
-        <button className="loginButton" disabled='{disabled}'>login</button>
-        <button className="signUpButton" disabled='{disabled}'>no account yet? click to sign up</button>
+        <button className="loginButton" disabled={loginDisabled}>login</button>
+        {/* clicking sign-up button should trigger route to Register Form */}
+        <button className="signUpButton">no account yet? click to sign up</button> 
       </form>
       <Posts />
   </div>
@@ -89,7 +130,7 @@ const [registerFormValues, setRegisterFormValues] = useState(initialRegisterForm
 
  //////////////// EVENT HANDLERS ////////////////
 
- const inputChange = (name, value) => {
+ const registerInputChange = (name, value) => {
   yup
   .reach(registerschema, name)
   .validate(value) // validate this value
@@ -106,7 +147,7 @@ const [registerFormValues, setRegisterFormValues] = useState(initialRegisterForm
        setRegisterErrors({
          ...registerErrors,
          // validation error from schema
-         [name]: err.registerErrors[0],
+         [name]: err.errors[0],
        });
      });
 
@@ -116,15 +157,34 @@ const [registerFormValues, setRegisterFormValues] = useState(initialRegisterForm
      });
 }
 
+const onChange = (evt) => {
+  const { name, value } = evt.target;
+  registerInputChange(name, value)
+}
+
 //////////////// SIDE EFFECTS ////////////////
+
+useEffect(() => {
+  registerschema.isValid(registerFormValues).then((valid) => {
+    setRegisterDisabled(!valid);
+  });
+}, [registerFormValues]); 
   return(
     <div className= "Form">
+      <div className="errors">
+      {registerErrors.fname}<br/>
+      {registerErrors.lname}<br/>
+      {registerErrors.email}<br/>  
+      {registerErrors.username}<br/>
+      {registerErrors.password}<br/>
+      {registerErrors.confirmPassword}<br/>
+      </div>
     <form className = "form container">
     <label>
       First Name: 
       <input
-      value="#"
-      onChange="#"
+      value={registerFormValues.fname}
+      onChange={onChange}
       name="fname"
       type="text"
       />
@@ -132,8 +192,8 @@ const [registerFormValues, setRegisterFormValues] = useState(initialRegisterForm
       <label>
       Last Name: 
       <input
-      value="#"
-      onChange="#"
+      value={registerFormValues.lname}
+      onChange={onChange}
       name="lname"
       type="text"
       />
@@ -141,8 +201,8 @@ const [registerFormValues, setRegisterFormValues] = useState(initialRegisterForm
       <label>
       Email: 
       <input
-      value="#"
-      onChange="#"
+      value={registerFormValues.email}
+      onChange={onChange}
       name="email"
       type="text"
       />
@@ -150,8 +210,8 @@ const [registerFormValues, setRegisterFormValues] = useState(initialRegisterForm
       <label>
       Username: 
       <input
-      value="#"
-      onChange="#"
+      value={registerFormValues.username}
+      onChange={onChange}
       name="username"
       type="text"
       />
@@ -159,8 +219,8 @@ const [registerFormValues, setRegisterFormValues] = useState(initialRegisterForm
       <label>
       Password: 
       <input
-      value="#"
-      onChange="#"
+      value={registerFormValues.password}
+      onChange={onChange}
       name="password"
       type="text"
       />
@@ -168,13 +228,13 @@ const [registerFormValues, setRegisterFormValues] = useState(initialRegisterForm
       <label>
       Confirm Password: 
       <input
-      value="#"
-      onChange="#"
+      value={registerFormValues.confirmPassword}
+      onChange={onChange}
       name="confirmPassword"
       type="text"
       />
       </label>
-      <button className="loginButton" disabled='{disabled}'>register
+      <button className="loginButton" disabled={registerDisabled}>register
       </button>
     </form>
 </div>
