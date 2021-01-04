@@ -4,6 +4,8 @@ import axios from 'axios';
 import * as yup from 'yup';
 import loginschema from '../loginschema'
 
+import { axiosWithAuth } from './../utils/axiosWithAuth';
+
 //// sample data //////
 
 const sampleUserList = [
@@ -73,18 +75,23 @@ const initialLoginFormValues = {
   
   const initialLoginDisabled = true;
   
-  
 
-function LoginForm() {
+function LoginForm(props) {
+    // const [credentials, setCredentials] = useState(initialCredentials);
+
+
 
     //////////////// STATES //////////////// 
     const [loginDisabled, setLoginDisabled] = useState(initialLoginDisabled);
     const [loginErrors, setLoginErrors] = useState(initialLoginErrors);
     const [loginFormValues, setLoginFormValues] = useState(initialLoginFormValues);
-    const [currentUser, setCurrentUser] = useState(initialUser);
+
+    // const [currentUser, setCurrentUser] = useState(initialUser);
+
     const [userList, setUserList] = useState(sampleUserList);
-    const [currentPost, setCurrentPost] = useState(initialPost);
-    const [posts, setPosts] = useState([]);
+    
+    // const [currentPost, setCurrentPost] = useState(initialPost);
+    // const [posts, setPosts] = useState([]);
     //////////////// HELPERS ////////////////
     
     //////////////// EVENT HANDLERS ////////////////
@@ -138,28 +145,35 @@ function LoginForm() {
           </div>
           <form className = "form container">
             <label>
-            Username: 
-            <input
-            value={loginFormValues.username}
-            onChange={onChange}
-            name="username"
-            type="text"
-            />
+              Username: 
+              <input
+                value={loginFormValues.username}
+                onChange={onChange}
+                name="username"
+                type="text"
+              />
             </label>
             <label>
-            Password: 
-            <input
-            value={loginFormValues.password}
-            onChange={onChange}
-            name="password"
-            type="text"
-            />
+              Password: 
+              <input
+                value={loginFormValues.password}
+                onChange={onChange}
+                name="password"
+                type="text"
+              />
             </label>
             <button className="loginButton" disabled={loginDisabled}>login</button>
             {/* clicking sign-up button should trigger route to Register Form */}
-            <button className="signUpButton">no account yet? click to sign up</button> 
           </form>
-          <Posts currentUser={currentUser} setCurrentUser={setCurrentUser} currentPost={currentPost} setCurrentPost={setCurrentPost} posts={posts} setPosts={setPosts} userList={userList} setUserList={setUserList}/> 
+          <div>
+            <p>No account yet?</p>
+            <button onClick={() => props.history.push('/register')}>Register</button>
+          </div>
+          {/* <button className="signUpButton">No account yet? click to sign up</button>  */}
+          {/* <Posts currentUser={currentUser} setCurrentUser={setCurrentUser} currentPost={currentPost} setCurrentPost={setCurrentPost} posts={posts} setPosts={setPosts} userList={userList} setUserList={setUserList}/>  */}
+          
+          <Posts userList={userList} setUserList={setUserList} /> 
+
           {/* Mike to consider moving/revising these states */}
       </div>
       )

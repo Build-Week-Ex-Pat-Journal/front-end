@@ -1,0 +1,67 @@
+import axios from 'axios';
+import { axiosWithAuth } from './../utils/axiosWithAuth';
+
+export const API_ALL_POSTS_START = "API_ALL_POSTS_START";
+export const API_GET_ALL_POSTS_SUCCESS = "API_GET_ALL_POSTS_SUCCESS";
+
+export const API_POST_ALL_POSTS_SUCCESS = "API_POST_ALL_POSTS_SUCCESS";
+export const API_ALL_POSTS_FAIL = "API_ALL_POSTS_FAIL";
+
+export const SET_CURRENT_USERNAME = "SET_CURRENT_USERNAME";
+
+
+// export const FORM_ERROR = "FORM_ERROR";
+
+
+export const fetchAllPosts = () => dispatch => {
+    dispatch({type:API_ALL_POSTS_START});
+
+    axiosWithAuth()
+        .get("https://expatjournal2021.herokuapp.com/posts")
+        .then(res => {
+            console.log(res.data);
+            dispatch({type:API_GET_ALL_POSTS_SUCCESS, payload:res.data});
+        })
+        .catch(err => dispatch({type:API_ALL_POSTS_FAIL, payload:err}));
+}
+
+export const addPost = (currentUsername, photo, story) => dispatch => {
+    // if (!currentUsername || !photo || !story) {
+    //     dispatch({type:FORM_ERROR, payload:"Photo and story are required, and user must be logged in."})
+    // } else {
+        // user_id instead of username?
+    // }
+
+    const newPost = {
+        username: currentUsername,
+        photo: photo,
+        story: story
+    }
+
+    axiosWithAuth()
+        .post("https://expatjournal2021.herokuapp.com/posts/", newPost)
+        .then((res) => {
+            console.log(res);
+            dispatch({type:API_POST_ALL_POSTS_SUCCESS, payload:newPost});
+        })
+        .catch(err => dispatch({type:API_ALL_POSTS_FAIL, payload:err}));
+}
+
+export const setCurrentUsername = (username) => {
+    return {type:SET_CURRENT_USERNAME, payload:username};
+}
+
+
+// const initialUser = {
+//     fname: '',
+//     lname: '',
+//     email: '',
+//     username: '',
+//     password: '',
+//     posts:[]
+//   }
+  
+//   const initialPost = {
+//     photo:'',
+//     story:''
+//   }
