@@ -30,15 +30,6 @@ function Posts(props) {
                         <h4>Username: {post.user_id}</h4>
                         Image: {post.image}<br />
                         Story: {post.story}
-                        {/* {
-                            post.posts.map((post,idx) => {
-                            return(
-                            <div key={idx} className='post card'>
-                                <Post user={user}/> 
-                            </div>
-                                )
-                            })
-                        } */}
                     </div>
                 )))  
             }

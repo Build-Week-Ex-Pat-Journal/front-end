@@ -9,30 +9,12 @@ import NavBar from './components/NavBar';
 import PrivateRoute from "./components/PrivateRoute";
 import NewPostForm from "./components/NewPostForm";
 
-
 import axios from 'axios';
 
 import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
 
-
-
-//////////////// INITIAL STATES ////////////////
-
-
-
-
-
-
-
 function App() {
 
- //////////////// STATES ////////////////  
-
- //////////////// HELPERS ////////////////
-
- //////////////// EVENT HANDLERS ////////////////
-
-  //////////////// SIDE EFFECTS ////////////////
   return (
   <div>
     <h1>Ex-Pat Journal</h1>
@@ -43,8 +25,6 @@ function App() {
         <Route exact path="/register" component={RegisterForm} />
         <PrivateRoute exact path="/all-posts" component={Posts} />
         <PrivateRoute exact path="/new-post" component={NewPostForm} />
-        {/* <LoginForm />
-        <RegisterForm /> */}
       </Switch>
     </Router>
   </div>
