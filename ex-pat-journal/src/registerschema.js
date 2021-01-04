@@ -19,6 +19,6 @@ export default yup.object().shape({
     .min(8, "password must be 8 chars in length"),
     confirmPassword: yup
         .string()
-       .oneOf([yup.ref('password'), null]) // Mike to fix this bug
+       .oneOf([yup.ref('password'), null], 'Passwords must match') // Mike to fix this bug
        .required('Confirm Password is required')
 });
