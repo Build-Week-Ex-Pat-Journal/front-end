@@ -1,0 +1,8 @@
+{
+  "dependencies": {
+    "axios": "^0.21.1",
+    "react": "^17.0.1",
+    "yup": "^0.32.8"
+  },
+  "name": "front-end"
+}
