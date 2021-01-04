@@ -9,10 +9,11 @@ import { fetchAllPosts } from './../actions';
 //////////////// INITIAL STATES ////////////////
 
 function Posts(props) {
-    console.log(props)
+    // console.log(props)
+    // const { fetchAllPosts } = props;
 
     useEffect(() => {
-        fetchAllPosts();
+        props.fetchAllPosts();
             // .then(res => {
             //     console.log(res);
 
@@ -21,17 +22,13 @@ function Posts(props) {
 
     return(
         <div>
-            {
-                console.log(props)
-            }
             <h2>All Posts:</h2>
             {
                 props.isLoading ? (<div>Loading</div>) 
-                : (props.allPosts.map((post, id) => 
-                (
+                : (props.allPosts.map((post, id) => (
                     <div key={id} className='post card'>
-                        <h4>Username: {post.username}</h4>
-                        Photo: {post.photo}<br />
+                        <h4>Username: {post.user_id}</h4>
+                        Image: {post.image}<br />
                         Story: {post.story}
                         {/* {
                             post.posts.map((post,idx) => {

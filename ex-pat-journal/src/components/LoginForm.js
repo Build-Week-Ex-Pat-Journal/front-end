@@ -133,12 +133,23 @@ function LoginForm(props) {
 
     const login = e => {
       e.preventDefault();
+
+      const credentialsTest = loginFormValues;
+
+      console.log(credentialsTest);
+
       axios
-        .post("https://expatjournal2021.herokuapp.com/api/login", loginFormValues)
+        .post("https://expatjournal2021.herokuapp.com/api/login", credentialsTest)
         .then((res) => {
-          console.log(res);
-          localStorage.setItem("token", res.data.payload);
-          setCurrentUsername(loginFormValues.username);
+          // console.log(res);
+          localStorage.setItem("token", res.data);
+          // console.log(res.data);
+          // console.log(credentialsTest);
+          props.setCurrentUsername(credentialsTest.username);
+
+          // console.log(props);
+          console.log(props.currentUsername);
+
           props.history.push('/all-posts');
         })
         .catch(err => {
@@ -199,12 +210,12 @@ function LoginForm(props) {
       )
     }
 
-// const mapStateToProps = state => {
-//   return {
-//       currentUsername: state.currentUsername
-//   }
-// };
+const mapStateToProps = state => {
+  return {
+      currentUsername: state.currentUsername
+  }
+};
 
-export default connect(null, {setCurrentUsername})(LoginForm);
+export default connect(mapStateToProps, {setCurrentUsername})(LoginForm);
 
 // export default LoginForm;

@@ -25,10 +25,10 @@ function NewPostForm(props) {
     const [formValues, setFormValues] = useState(initialFormValues);
 
     // This is a hack
-    const [disabled, setDisabled] = useState(initialDisabled);
-    if (formValues.story){
-        setDisabled(true);
-    }
+    // const [disabled, setDisabled] = useState(initialDisabled);
+    // if (formValues.story){
+    //     setDisabled(true);
+    // }
     
     const onChange = (evt) => {
       const { name, value } = evt.target;
@@ -47,19 +47,28 @@ function NewPostForm(props) {
     //   const newPost =
 
     //   addPost(props.currentUsername, image, story);
-
-        if (formValues.story){
-            const newPost = {
-                username: props.currentUsername,
-                ...formValues
-            }
-            addPost(newPost);
-        } else {
-            console.log("Story required field")
+        
+        const newPost = {
+            user_id: props.currentUsername,
+            ...formValues
         }
+        console.log(newPost);
+        props.addPost(newPost);
+        props.history.push("/all-posts");
+
+        // if (formValues.story){
+        //     const newPost = {
+        //         username: props.currentUsername,
+        //         ...formValues
+        //     }
+        //     console.log(newPost);
+        //     addPost(newPost);
+        // } else {
+        //     console.log("Story required field")
+        // }
     }
     
-      return(
+    return(
         <div className="Form">
           {/* <div style={{"color": "red"}} className="errors">
             {registerErrors.fname}<br/>
@@ -93,20 +102,21 @@ function NewPostForm(props) {
             </label>
             <br />
 
-            <button disabled={disabled}>Post</button>
+{/* disabled={disabled} */}
+            <button>Post</button>
             {/* <button className="loginButton" disabled={registerDisabled}>register
             </button> */}
           </form>
       </div>
-      )
-    }
+    )
+}
 
-    const mapStateToProps = state => {
-        return {
-            currentUsername: state.currentUsername
-        }
-    };
-    
-    export default connect(mapStateToProps, {addPost})(NewPostForm);
+const mapStateToProps = state => {
+    return {
+        currentUsername: state.currentUsername
+    }
+};
+
+export default connect(mapStateToProps, {addPost})(NewPostForm);
 
     // export default NewPostForm;

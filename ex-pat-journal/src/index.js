@@ -10,10 +10,12 @@ import reducer from './reducers';
 import logger from 'redux-logger';
 
 const store = createStore(reducer, applyMiddleware(thunk, logger));
+const rootElement = document.getElementById("root");
+
 
 ReactDOM.render(
   <Provider store={store}>
     <App />
   </Provider>,
-  document.getElementById('root')
+  rootElement
 );
