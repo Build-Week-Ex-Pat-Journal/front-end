@@ -52,6 +52,11 @@ const reducer = (state = initialState, action) => {
                 isLoading: false,
                 error: action.payload
             });
+        case(SET_CURRENT_USERNAME):
+            return({
+                ...state,
+                currentUsername: action.payload
+            })
         // case(FORM_ERROR):
         //     return({
         //         ...state,

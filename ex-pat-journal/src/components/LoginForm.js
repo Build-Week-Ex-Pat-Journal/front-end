@@ -6,6 +6,9 @@ import loginschema from '../loginschema'
 
 import { axiosWithAuth } from './../utils/axiosWithAuth';
 
+import { setCurrentUsername } from './../actions';
+import { connect } from 'react-redux';
+
 //// sample data //////
 
 const sampleUserList = [
@@ -89,7 +92,7 @@ function LoginForm(props) {
     // const [currentUser, setCurrentUser] = useState(initialUser);
 
     const [userList, setUserList] = useState(sampleUserList);
-    
+
     // const [currentPost, setCurrentPost] = useState(initialPost);
     // const [posts, setPosts] = useState([]);
     //////////////// HELPERS ////////////////
@@ -126,6 +129,23 @@ function LoginForm(props) {
       const { name, value } = evt.target;
       loginInputChange(name, value)
     }
+
+
+    const login = e => {
+      e.preventDefault();
+      axios
+        .post("https://expatjournal2021.herokuapp.com/api/login", loginFormValues)
+        .then((res) => {
+          console.log(res);
+          localStorage.setItem("token", res.data.payload);
+          setCurrentUsername(loginFormValues.username);
+          props.history.push('/all-posts');
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    }
+
     //////////////// SIDE EFFECTS ////////////////
     // useEffect(() => {
     //   setUserList(sampleUserList)
@@ -143,7 +163,7 @@ function LoginForm(props) {
           {loginErrors.username}<br/>
           {loginErrors.password}<br/>
           </div>
-          <form className = "form container">
+          <form className = "form container" onSubmit={login}>
             <label>
               Username: 
               <input
@@ -172,11 +192,19 @@ function LoginForm(props) {
           {/* <button className="signUpButton">No account yet? click to sign up</button>  */}
           {/* <Posts currentUser={currentUser} setCurrentUser={setCurrentUser} currentPost={currentPost} setCurrentPost={setCurrentPost} posts={posts} setPosts={setPosts} userList={userList} setUserList={setUserList}/>  */}
           
-          <Posts userList={userList} setUserList={setUserList} /> 
+          {/* <Posts userList={userList} setUserList={setUserList} />  */}
 
           {/* Mike to consider moving/revising these states */}
       </div>
       )
     }
 
-    export default LoginForm;
+// const mapStateToProps = state => {
+//   return {
+//       currentUsername: state.currentUsername
+//   }
+// };
+
+export default connect(null, {setCurrentUsername})(LoginForm);
+
+// export default LoginForm;

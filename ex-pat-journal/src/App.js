@@ -7,6 +7,8 @@ import LoginForm from './components/LoginForm';
 import RegisterForm from './components/RegisterForm';
 import NavBar from './components/NavBar';
 import PrivateRoute from "./components/PrivateRoute";
+import NewPostForm from "./components/NewPostForm";
+
 
 import axios from 'axios';
 
@@ -39,7 +41,8 @@ function App() {
       <Switch>
         <Route exact path="/" component={LoginForm} />
         <Route exact path="/register" component={RegisterForm} />
-        <PrivateRoute exact path="/network-posts" component={Posts} />
+        <PrivateRoute exact path="/all-posts" component={Posts} />
+        <PrivateRoute exact path="/new-post" component={NewPostForm} />
         {/* <LoginForm />
         <RegisterForm /> */}
       </Switch>

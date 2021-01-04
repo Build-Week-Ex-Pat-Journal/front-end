@@ -20,13 +20,18 @@ const NavBar = (props) => {
                         </Link>
                     </Grid>
                     <Grid item style={{width: "12%"}}>
-                        <Link to="/network-posts" color="inherit">
-                            Network Posts
+                        <Link to="/all-posts" color="inherit">
+                            All Posts
                         </Link>
                     </Grid>
                     <Grid item style={{width: "12%"}}>
                         <Link to="/my-posts" color="inherit">
                             My Posts
+                        </Link>
+                    </Grid>
+                    <Grid item style={{width: "12%"}}>
+                        <Link to="/new-post" color="inherit">
+                            New Post
                         </Link>
                     </Grid>
                 </Grid>

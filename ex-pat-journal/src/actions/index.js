@@ -12,7 +12,6 @@ export const SET_CURRENT_USERNAME = "SET_CURRENT_USERNAME";
 
 // export const FORM_ERROR = "FORM_ERROR";
 
-
 export const fetchAllPosts = () => dispatch => {
     dispatch({type:API_ALL_POSTS_START});
 
@@ -25,19 +24,24 @@ export const fetchAllPosts = () => dispatch => {
         .catch(err => dispatch({type:API_ALL_POSTS_FAIL, payload:err}));
 }
 
-export const addPost = (currentUsername, photo, story) => dispatch => {
+// export const addPost = (currentUsername, image, story) => dispatch => {
+    // const newPost = {
+    //     username: currentUsername,
+    //     image: image,
+    //     story: story
+    //     // story, image
+    // }
+
+
+export const addPost = (newPost) => dispatch => {
     // if (!currentUsername || !photo || !story) {
     //     dispatch({type:FORM_ERROR, payload:"Photo and story are required, and user must be logged in."})
     // } else {
         // user_id instead of username?
     // }
 
-    const newPost = {
-        username: currentUsername,
-        photo: photo,
-        story: story
-    }
-
+    console.log(newPost);
+    
     axiosWithAuth()
         .post("https://expatjournal2021.herokuapp.com/posts/", newPost)
         .then((res) => {
