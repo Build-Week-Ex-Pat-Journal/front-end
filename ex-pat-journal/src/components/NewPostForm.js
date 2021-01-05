@@ -83,7 +83,7 @@ function NewPostForm(props) {
         </div> */}
         <form className="form container" onSubmit={onSubmit}>
           <label>
-            Image: 
+            Image url: 
             {/* CHANGE THIS FORM WHEN WE DO IT FOR IMAGES: */}
             <input
               value={formValues.image}

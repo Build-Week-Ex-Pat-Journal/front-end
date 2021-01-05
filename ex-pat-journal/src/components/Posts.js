@@ -26,9 +26,11 @@ function Posts(props) {
             {
                 props.isLoading ? (<div>Loading</div>) 
                 : (props.allPosts.map((post, id) => (
-                    <div key={id} className='post card'>
+                    <div key={id} className='post-card'>
                         <h4>Username: {post.user_id}</h4>
-                        Image: {post.image}<br />
+                        Image: {post.image}
+                        <img src={post.image} alt="uploaded" />
+                        <br />
                         Story: {post.story}
                     </div>
                 )))  

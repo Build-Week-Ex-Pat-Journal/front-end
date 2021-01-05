@@ -23,8 +23,8 @@ function App() {
       <Switch>
         <Route exact path="/" component={LoginForm} />
         <Route exact path="/register" component={RegisterForm} />
-        <PrivateRoute exact path="/all-posts" component={Posts} />
-        <PrivateRoute exact path="/new-post" component={NewPostForm} />
+        <PrivateRoute path="/all-posts" component={Posts} />
+        <PrivateRoute path="/new-post" component={NewPostForm} />
       </Switch>
     </Router>
   </div>

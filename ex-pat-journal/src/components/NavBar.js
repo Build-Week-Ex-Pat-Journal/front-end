@@ -10,6 +10,11 @@ import { Link } from "react-router-dom";
 
 const NavBar = (props) => {
     // console.log(props.theme);
+
+    const logout = () => {
+        localStorage.removeItem("token");
+        // props.history.push("/");
+    }
     return(
         <AppBar className="nav-bar" display="flex" position="static">
             <Toolbar>
@@ -32,6 +37,12 @@ const NavBar = (props) => {
                     <Grid item style={{width: "12%"}}>
                         <Link to="/new-post" color="inherit">
                             New Post
+                        </Link>
+                    </Grid>
+                    <Grid item style={{width: "12%"}}>
+                        {/* to="/new-post" */}
+                        <Link to="/" onClick={logout} color="inherit">
+                            Log out
                         </Link>
                     </Grid>
                 </Grid>

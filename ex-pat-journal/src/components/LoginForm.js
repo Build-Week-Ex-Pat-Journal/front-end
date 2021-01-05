@@ -8,15 +8,15 @@ import { setCurrentUsername } from './../actions';
 import { connect } from 'react-redux';
 
 const initialLoginFormValues = {
-    username: '',
-    password: ''
-  }
+  username: '',
+  password: ''
+}
   
-  const initialLoginErrors = {
-    username: '',
-    password: '',
-  }
-  
+const initialLoginErrors = {
+  username: '',
+  password: '',
+}
+
   const initialLoginDisabled = true;
   
 
@@ -90,9 +90,9 @@ function LoginForm(props) {
     
       return(
       <div className= "Form">
-          <div className="errors">
-          {loginErrors.username}<br/>
-          {loginErrors.password}<br/>
+          <div className="errors" style={{"color":"red"}}>
+            {loginErrors.username}<br/>
+            {loginErrors.password}<br/>
           </div>
           <form className = "form container" onSubmit={login}>
             <label>
