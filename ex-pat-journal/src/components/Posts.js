@@ -21,12 +21,22 @@ function Posts(props) {
             // })
     }, [])
 
+
+///// STYLING ////////    
     const PostWrapper = styled.div`
     border: 2px solid black;
     box-shadow: 5px 10px #888888;
-    margin: 5%;
-    width: 80%;
+    margin: 5% auto;
+    width: 30%;
     border-radius:10px;
+    @media (max-width: 1800px) {
+        margin: 5% auto;
+        width: 40%;
+    }
+    @media (max-width: 1300px) {
+        margin: 5% auto;
+        width: 80%;
+    }
     `
     const ImgWrapper = styled.div`
     width: 90%;
@@ -34,11 +44,25 @@ function Posts(props) {
     margin: 2% auto;
     `
     const TextContentWrapper = styled.div`
+    padding-right: 5%;
     padding-left: 5%;`
 
+    const PostsWrapper = styled.div`
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;    
+    `
+    const PageWrapper = styled.div`
+    width: 100%;
+    h2 {
+        margin-left:5%;
+    }
+    `
+
     return(
-        <div>
+        <PageWrapper>
             <h2>All Posts:</h2>
+            <PostsWrapper>
             {
                 props.isLoading ? (<div>Loading</div>) 
                 : (props.allPosts.map((post, id) => (
@@ -53,7 +77,8 @@ function Posts(props) {
                     </PostWrapper>
                 )))  
             }
-        </div>
+            </PostsWrapper>
+        </PageWrapper>
     )
 }
 
