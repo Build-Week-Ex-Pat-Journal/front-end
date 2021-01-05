@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Post from './Post';
 import { connect } from 'react-redux';
+import styled from 'styled-components'
 
 // import {  fetchAllPosts, addPost, setCurrentUsername } from './../actions';
 
@@ -20,19 +21,36 @@ function Posts(props) {
             // })
     }, [])
 
+    const PostWrapper = styled.div`
+    border: 2px solid black;
+    box-shadow: 5px 10px #888888;
+    margin: 5%;
+    width: 80%;
+    border-radius:10px;
+    `
+    const ImgWrapper = styled.div`
+    width: 90%;
+    text-align: center;
+    margin: 2% auto;
+    `
+    const TextContentWrapper = styled.div`
+    padding-left: 5%;`
+
     return(
         <div>
             <h2>All Posts:</h2>
             {
                 props.isLoading ? (<div>Loading</div>) 
                 : (props.allPosts.map((post, id) => (
-                    <div key={id} className='post-card'>
-                        <h4>Username: {post.user_id}</h4>
-                        Image: {post.image}
-                        <img src={post.image} alt="uploaded" />
-                        <br />
-                        Story: {post.story}
-                    </div>
+                    <PostWrapper key={id} className='post-card'>
+                        <ImgWrapper>
+                            <img src={post.image} alt="uploaded" style={{maxWidth: "100%"}}/>
+                        </ImgWrapper>
+                        <TextContentWrapper>
+                            <h4>{post.user_id}</h4>
+                            <p>{post.story}</p>
+                        </TextContentWrapper>
+                    </PostWrapper>
                 )))  
             }
         </div>
