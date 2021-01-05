@@ -79,6 +79,7 @@ function LoginForm(props) {
         })
         .catch(err => {
           console.log(err);
+          setLoginErrors({...loginErrors, password:'You entered an incorrect username or password.'})
         });
     }
     
@@ -87,6 +88,9 @@ function LoginForm(props) {
         setLoginDisabled(!valid);
       });
     }, [loginFormValues]);  
+
+    useEffect(() => {}
+    , [loginErrors]);
     
       return(
       <div className= "Form">
