@@ -33,62 +33,66 @@ function LoginForm(props) {
     yup
       .reach(loginschema, name)
       .validate(value) // validate this value
-      .then(() => {
-        // happy path and clear the error
-        setLoginErrors({
-          ...loginErrors,
-          [name]: "",
-        });
-      })
-      // if the validation is unsuccessful, we can set the error message to the message
-      // returned from yup (that we created in our schema)
-      .catch((err) => {
-        setLoginErrors({
-          ...loginErrors,
-          // validation error from schema
-          [name]: err.errors[0],
+         .then(() => {
+           // happy path and clear the error
+           setLoginErrors({
+             ...loginErrors,
+             [name]: "",
+           });
+         })
+         // if the validation is unsuccessful, we can set the error message to the message
+         // returned from yup (that we created in our schema)
+         .catch((err) => {
+           setLoginErrors({
+             ...loginErrors,
+             // validation error from schema
+             [name]: err.errors[0],
+           });
+         });
+    
+         setLoginFormValues({
+           ...loginFormValues,
+           [name]: value, // NOT AN ARRAY
+         });
+    }
+    
+    const onChange = (evt) => {
+      const { name, value } = evt.target;
+      loginInputChange(name, value)
+    }
+
+
+    const login = e => {
+      e.preventDefault();
+
+      const credentialsTest = loginFormValues;
+
+      console.log(credentialsTest);
+
+      axios
+        .post("https://expatjournal2021.herokuapp.com/api/login", credentialsTest)
+        .then((res) => {
+          localStorage.setItem("token", res.data);
+          props.setCurrentUsername(credentialsTest.username);
+
+          console.log(props.currentUsername);
+
+          props.history.push('/all-posts');
+        })
+        .catch(err => {
+          console.log(err);
+          setLoginErrors({...loginErrors, password:'You entered an incorrect username or password.'};
         });
       });
-
-    setLoginFormValues({
-      ...loginFormValues,
-      [name]: value, // NOT AN ARRAY
-    });
-  };
-
-  const onChange = (evt) => {
-    const { name, value } = evt.target;
-    loginInputChange(name, value);
-  };
-
-  const login = (e) => {
-    e.preventDefault();
-
-    const credentialsTest = loginFormValues;
-
-    console.log(credentialsTest);
-
-    axios
-      .post("https://expatjournal2021.herokuapp.com/api/login", credentialsTest)
-      .then((res) => {
-        localStorage.setItem("token", res.data);
-        props.setCurrentUsername(credentialsTest.username);
-
-        console.log(props.currentUsername);
-
-        props.history.push("/all-posts");
-      })
-      .catch((err) => {
-        console.log(err);
+      
+      useEffect(() => {
+      loginschema.isValid(loginFormValues).then((valid) => {
+        setLoginDisabled(!valid);
       });
-  };
-
-  useEffect(() => {
-    loginschema.isValid(loginFormValues).then((valid) => {
-      setLoginDisabled(!valid);
-    });
-  }, [loginFormValues]);
-
+    }, [loginFormValues]);  
+    useEffect(() => {}
+    , [loginErrors]);
+      
   return (
     <StyledLogin>
       <div className="Form">
@@ -128,6 +132,7 @@ function LoginForm(props) {
             Register
           </button>
         </div>
+    
       </div>
     </StyledLogin>
   );
