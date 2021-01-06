@@ -1,42 +1,46 @@
-import React,  { useState, useEffect} from 'react'; 
-import Posts from './Posts';
-import axios from 'axios';
-import * as yup from 'yup';
-import registerschema from '../registerschema'
+import React, { useState, useEffect } from "react";
+import Posts from "./Posts";
+import axios from "axios";
+import * as yup from "yup";
+import registerschema from "../registerschema";
+import styled from "styled-components";
 
 const initialRegisterFormValues = {
-    fname: '',
-    lname: '',
-    email: '',
-    username: '',
-    password: '',
-    confirmPassword: ''
-  }
-  
-  const initialRegisterErrors = {
-    fname: '',
-    lname: '',
-    email: '',
-    username: '',
-    password: '',
-    confirmPassword: ''
-  }
-  
-  const initialRegisterDisabled = true;
+  fname: "",
+  lname: "",
+  email: "",
+  username: "",
+  password: "",
+  confirmPassword: "",
+};
 
+const initialRegisterErrors = {
+  fname: "",
+  lname: "",
+  email: "",
+  username: "",
+  password: "",
+  confirmPassword: "",
+};
+
+const initialRegisterDisabled = true;
 
 function RegisterForm(props) {
-  //////////////// STATES //////////////// 
-  const [registerDisabled, setRegisterDisabled] = useState(initialRegisterDisabled);
-  const [registerErrors, setRegisterErrors] = useState(initialRegisterErrors)
-  const [registerFormValues, setRegisterFormValues] = useState(initialRegisterFormValues)
-  
-    //////////////// EVENT HANDLERS ////////////////
-  
+  //////////////// STATES ////////////////
+  const [registerDisabled, setRegisterDisabled] = useState(
+    initialRegisterDisabled
+  );
+  const [registerErrors, setRegisterErrors] = useState(initialRegisterErrors);
+  const [registerFormValues, setRegisterFormValues] = useState(
+    initialRegisterFormValues
+  );
+
+  //////////////// EVENT HANDLERS ////////////////
+
   const registerInputChange = (name, value) => {
-  yup
-  .reach(registerschema, name)
-  .validate(value) // validate this value
+    yup
+      .reach(registerschema, name)
+      .validate(value) // validate this value
       .then(() => {
         // happy path and clear the error
         setRegisterErrors({
@@ -54,60 +58,71 @@ function RegisterForm(props) {
         });
       });
 
-      setRegisterFormValues({
-        ...registerFormValues,
-        [name]: value, // NOT AN ARRAY
-      });
-  }
-  
+    setRegisterFormValues({
+      ...registerFormValues,
+      [name]: value, // NOT AN ARRAY
+    });
+  };
+
   const onChange = (evt) => {
     const { name, value } = evt.target;
-    registerInputChange(name, value)
-  }
+    registerInputChange(name, value);
+  };
 
-  const register = e => {
+  const register = (e) => {
     e.preventDefault();
 
     // Because backend is not currently built to hold
     // fname, lname, and email, as of 1/4/21
     const abbreviatedRegistrationCredentials = {
       username: registerFormValues.username,
-      password: registerFormValues.password
-    }
+      password: registerFormValues.password,
+    };
     console.log(abbreviatedRegistrationCredentials);
 
     axios
-      .post("https://expatjournal2021.herokuapp.com/api/register", abbreviatedRegistrationCredentials)
+      .post(
+        "https://expatjournal2021.herokuapp.com/api/register",
+        abbreviatedRegistrationCredentials
+      )
       .then((res) => {
         console.log(res);
-        props.history.push('/');
+        props.history.push("/");
       })
-      .catch(err => {
+      .catch((err) => {
         console.log(err);
       });
-  }
-  
+  };
+
   //////////////// SIDE EFFECTS ////////////////
-  
+
   useEffect(() => {
     registerschema.isValid(registerFormValues).then((valid) => {
       setRegisterDisabled(!valid);
     });
   }, [registerFormValues]);
 
-  return(
-      <div className= "Form">
-        <div style={{"color": "red"}} className="errors">
-          {registerErrors.fname}<br/>
-          {registerErrors.lname}<br/>
-          {registerErrors.email}<br/>  
-          {registerErrors.username}<br/>
-          {registerErrors.password}<br/>
-          {registerErrors.confirmPassword}<br/>
+  return (
+    <StyledRegister>
+      <div className="Form">
+        <div style={{ color: "red" }} className="errors">
+          {registerErrors.fname}
+          <br />
+          {registerErrors.lname}
+          <br />
+          {registerErrors.email}
+          <br />
+          {registerErrors.username}
+          <br />
+          {registerErrors.password}
+          <br />
+          {registerErrors.confirmPassword}
+          <br />
         </div>
         <form className="form container" onSubmit={register}>
-          <label>
-            First Name: 
+          <h1>Registration</h1>
+          <label className="name">
+            First Name:
             <input
               value={registerFormValues.fname}
               onChange={onChange}
@@ -115,10 +130,9 @@ function RegisterForm(props) {
               type="text"
             />
           </label>
-          <br />
 
-          <label>
-            Last Name: 
+          <label className="name">
+            Last Name:
             <input
               value={registerFormValues.lname}
               onChange={onChange}
@@ -126,10 +140,9 @@ function RegisterForm(props) {
               type="text"
             />
           </label>
-          <br />
 
-          <label>
-            Email: 
+          <label className="name">
+            Email:
             <input
               value={registerFormValues.email}
               onChange={onChange}
@@ -137,10 +150,9 @@ function RegisterForm(props) {
               type="text"
             />
           </label>
-          <br />
 
-          <label>
-            Username: 
+          <label className="name">
+            Username:
             <input
               value={registerFormValues.username}
               onChange={onChange}
@@ -148,34 +160,77 @@ function RegisterForm(props) {
               type="text"
             />
           </label>
-          <br />
-          <label>
-            Password: 
+
+          <label className="name">
+            Password:
             <input
               value={registerFormValues.password}
               onChange={onChange}
               name="password"
-              type="text"
+              type="password"
             />
           </label>
-          <br />
 
-          <label>
-            Confirm Password: 
+          <label className="name">
+            Confirm Password:
             <input
               value={registerFormValues.confirmPassword}
               onChange={onChange}
               name="confirmPassword"
-              type="text"
+              type="password"
             />
           </label>
-          <br />
 
-          <button className="loginButton" disabled={registerDisabled}>register
+          <button className="loginButton" disabled={registerDisabled}>
+            register
           </button>
         </form>
-    </div>
-  )
+      </div>
+    </StyledRegister>
+  );
 }
 
 export default RegisterForm;
+
+const StyledRegister = styled.div`
+  background-color: ${(pr) => pr.theme.backColor};
+  .container {
+    color: ${(pr) => pr.theme.textColor};
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    border: black solid 2px;
+    background-color: #f0f8ff;
+    width: 95%;
+    margin: 0 auto;
+  }
+  .errors {
+    text-align: center;
+    text-decoration: underline;
+    line-height: 20px;
+    font-weight: 500;
+  }
+  h1 {
+    text-align: center;
+    text-decoration: underline;
+    color: ${(pr) => pr.theme.titleColor};
+    font-size: 5em;
+  }
+  .name {
+    display: flex;
+    justify-content: space-between;
+    margin: 2% auto;
+    width: 50%;
+    text-align: center;
+  }
+  button {
+    background-color: ${(pr) => pr.theme.btnColor};
+    padding: ${(pr) => pr.theme.padding.medium};
+    width: ${(pr) => pr.theme.width.small};
+    margin: 1% auto;
+    &:hover {
+      background-color: ${(pr) => pr.theme.secondBtnColor};
+    } /* hover closed */
+  } /* button closed*/
+`; //stylist closed

@@ -1,34 +1,36 @@
-import React,  { useState, useEffect} from 'react'; 
-import Posts from './Posts';
-import axios from 'axios';
-import * as yup from 'yup';
-import loginschema from '../loginschema';
+import React, { useState, useEffect } from "react";
+import Posts from "./Posts";
+import axios from "axios";
+import * as yup from "yup";
+import loginschema from "../loginschema";
+import styled from "styled-components";
 
-import { setCurrentUsername } from './../actions';
-import { connect } from 'react-redux';
+import { setCurrentUsername } from "./../actions";
+import { connect } from "react-redux";
 
 const initialLoginFormValues = {
-  username: '',
-  password: ''
-}
-  
-const initialLoginErrors = {
-  username: '',
-  password: '',
-}
+  username: "",
+  password: "",
+};
 
-  const initialLoginDisabled = true;
-  
+const initialLoginErrors = {
+  username: "",
+  password: "",
+};
+
+const initialLoginDisabled = true;
 
 function LoginForm(props) {
-    //////////////// STATES //////////////// 
-    const [loginDisabled, setLoginDisabled] = useState(initialLoginDisabled);
-    const [loginErrors, setLoginErrors] = useState(initialLoginErrors);
-    const [loginFormValues, setLoginFormValues] = useState(initialLoginFormValues);
-    
-    //////////////// EVENT HANDLERS ////////////////
-    const loginInputChange = (name, value) => {
-      yup
+  //////////////// STATES ////////////////
+  const [loginDisabled, setLoginDisabled] = useState(initialLoginDisabled);
+  const [loginErrors, setLoginErrors] = useState(initialLoginErrors);
+  const [loginFormValues, setLoginFormValues] = useState(
+    initialLoginFormValues
+  );
+
+  //////////////// EVENT HANDLERS ////////////////
+  const loginInputChange = (name, value) => {
+    yup
       .reach(loginschema, name)
       .validate(value) // validate this value
          .then(() => {
@@ -79,59 +81,108 @@ function LoginForm(props) {
         })
         .catch(err => {
           console.log(err);
-          setLoginErrors({...loginErrors, password:'You entered an incorrect username or password.'})
+          setLoginErrors({...loginErrors, password:'You entered an incorrect username or password.'};
         });
-    }
-    
-    useEffect(() => {
+      });
+      
+      useEffect(() => {
       loginschema.isValid(loginFormValues).then((valid) => {
         setLoginDisabled(!valid);
       });
     }, [loginFormValues]);  
-
     useEffect(() => {}
     , [loginErrors]);
+      
+  return (
+    <StyledLogin>
+      <div className="Form">
+        <div className="errors" style={{ color: "red" }}>
+          {loginErrors.username}
+          <br />
+          {loginErrors.password}
+          <br />
+        </div>
+        <form className="form container" onSubmit={login}>
+          <label className="name">
+            Username:
+            <input
+              value={loginFormValues.username}
+              onChange={onChange}
+              name="username"
+              type="text"
+            />
+          </label>
+          <label className="name">
+            Password:
+            <input
+              value={loginFormValues.password}
+              onChange={onChange}
+              name="password"
+              type="password"
+            />
+          </label>
+          <button className="loginButton" disabled={loginDisabled}>
+            login
+          </button>
+          {/* clicking sign-up button should trigger route to Register Form */}
+        </form>
+        <div className="register">
+          <p>No account yet?</p>
+          <button onClick={() => props.history.push("/register")}>
+            Register
+          </button>
+        </div>
     
-      return(
-      <div className= "Form">
-          <div className="errors" style={{"color":"red"}}>
-            {loginErrors.username}<br/>
-            {loginErrors.password}<br/>
-          </div>
-          <form className = "form container" onSubmit={login}>
-            <label>
-              Username: 
-              <input
-                value={loginFormValues.username}
-                onChange={onChange}
-                name="username"
-                type="text"
-              />
-            </label>
-            <label>
-              Password: 
-              <input
-                value={loginFormValues.password}
-                onChange={onChange}
-                name="password"
-                type="text"
-              />
-            </label>
-            <button className="loginButton" disabled={loginDisabled}>login</button>
-            {/* clicking sign-up button should trigger route to Register Form */}
-          </form>
-          <div>
-            <p>No account yet?</p>
-            <button onClick={() => props.history.push('/register')}>Register</button>
-          </div>
       </div>
-      )
-    }
+    </StyledLogin>
+  );
+}
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-      currentUsername: state.currentUsername
-  }
+    currentUsername: state.currentUsername,
+  };
 };
 
-export default connect(mapStateToProps, {setCurrentUsername})(LoginForm);
+export default connect(mapStateToProps, { setCurrentUsername })(LoginForm);
+
+const StyledLogin = styled.div`
+  background-color: ${(pr) => pr.theme.backColor};
+  .container {
+    color: ${(pr) => pr.theme.textColor};
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    border: black solid 2px;
+    background-color: #f0f8ff;
+    width: 90%;
+    margin: 0 auto;
+    padding: ${(pr) => pr.theme.padding.medium};
+  }
+  .name,
+  .register {
+    display: flex;
+    justify-content: space-between;
+    margin: 0 auto;
+    width: ${(pr) => pr.theme.width.medium};
+    text-align: center;
+    padding: ${(pr) => pr.theme.padding.medium};
+  }
+  button {
+    background-color: ${(pr) => pr.theme.btnColor};
+    padding: ${(pr) => pr.theme.padding.medium};
+    width: ${(pr) => pr.theme.width.medium};
+    margin: 3% auto;
+
+    &:hover {
+      background-color: ${(pr) => pr.theme.secondBtnColor};
+    } /* hover closed */
+  } /* button closed*/
+  .errors {
+    text-align: center;
+    text-decoration: underline;
+    line-height: 20px;
+    margin-bottom: 1em;
+  }
+`; //stylist closed
