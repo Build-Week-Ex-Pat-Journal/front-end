@@ -202,7 +202,7 @@ const StyledRegister = styled.div`
     align-content: center;
     border: black solid 2px;
     background-color: #f0f8ff;
-    width: 75%;
+    width: 80%;
     margin: 0 auto;
   }
   .errors {

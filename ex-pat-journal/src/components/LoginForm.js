@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import Posts from "./Posts";
 import axios from "axios";
 import * as yup from "yup";
 import loginschema from "../loginschema";
@@ -79,15 +78,18 @@ function LoginForm(props) {
         props.history.push("/all-posts");
       })
       .catch((err) => {
-        console.log(err);
+        setLoginErrors({
+          ...loginErrors,
+          password: "You entered an incorrect username or password.",
+        });
       });
   };
-
   useEffect(() => {
     loginschema.isValid(loginFormValues).then((valid) => {
       setLoginDisabled(!valid);
     });
   }, [loginFormValues]);
+  useEffect(() => {}, [loginErrors]);
 
   return (
     <StyledLogin>
@@ -118,7 +120,7 @@ function LoginForm(props) {
             />
           </label>
           <button className="loginButton" disabled={loginDisabled}>
-            login
+            Login
           </button>
           {/* clicking sign-up button should trigger route to Register Form */}
         </form>
@@ -151,9 +153,9 @@ const StyledLogin = styled.div`
     align-content: center;
     border: black solid 2px;
     background-color: #f0f8ff;
-    width: 90%;
+    width: 50%;
     margin: 0 auto;
-    padding: ${(pr) => pr.theme.padding.medium};
+    padding: ${(pr) => pr.theme.padding.small};
   }
   .name,
   .register {
@@ -164,12 +166,14 @@ const StyledLogin = styled.div`
     text-align: center;
     padding: ${(pr) => pr.theme.padding.medium};
   }
+  .loginButton {
+    width: ${(pr) => pr.theme.width.small};
+  }
   button {
     background-color: ${(pr) => pr.theme.btnColor};
     padding: ${(pr) => pr.theme.padding.medium};
     width: ${(pr) => pr.theme.width.medium};
-    margin: 3% auto;
-
+    margin: 2% auto;
     &:hover {
       background-color: ${(pr) => pr.theme.secondBtnColor};
     } /* hover closed */

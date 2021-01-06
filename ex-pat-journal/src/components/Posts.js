@@ -21,39 +21,32 @@ function Posts(props) {
             // })
     }, [])
 
-    const PostWrapper = styled.div`
-    border: 2px solid black;
-    box-shadow: 5px 10px #888888;
-    margin: 5%;
-    width: 80%;
-    border-radius:10px;
+
+///// STYLING ////////    
+    const PostsWrapper = styled.div`
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;    
     `
-    const ImgWrapper = styled.div`
-    width: 90%;
-    text-align: center;
-    margin: 2% auto;
+    const PageWrapper = styled.div`
+    width: 100%;
+    h2 {
+        margin-left:5%;
+    }
     `
-    const TextContentWrapper = styled.div`
-    padding-left: 5%;`
 
     return(
-        <div>
+        <PageWrapper>
             <h2>All Posts:</h2>
+            <PostsWrapper>
             {
                 props.isLoading ? (<div>Loading</div>) 
                 : (props.allPosts.map((post, id) => (
-                    <PostWrapper key={id} className='post-card'>
-                        <ImgWrapper>
-                            <img src={post.image} alt="uploaded" style={{maxWidth: "100%"}}/>
-                        </ImgWrapper>
-                        <TextContentWrapper>
-                            <h4>{post.user_id}</h4>
-                            <p>{post.story}</p>
-                        </TextContentWrapper>
-                    </PostWrapper>
+                    <Post key={id} post={post}/>
                 )))  
             }
-        </div>
+            </PostsWrapper>
+        </PageWrapper>
     )
 }
 
