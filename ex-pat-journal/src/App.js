@@ -12,6 +12,7 @@ import NewPostForm from "./components/NewPostForm";
 import axios from 'axios';
 
 import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
+import MyPosts from './components/MyPosts';
 
 function App() {
 
@@ -25,6 +26,7 @@ function App() {
         <Route exact path="/register" component={RegisterForm} />
         <PrivateRoute path="/all-posts" component={Posts} />
         <PrivateRoute path="/new-post" component={NewPostForm} />
+        <PrivateRoute path="/my-posts" component={MyPosts} />
       </Switch>
     </Router>
   </div>
