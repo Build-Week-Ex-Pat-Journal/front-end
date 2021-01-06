@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import Posts from "./Posts";
 import axios from "axios";
 import * as yup from "yup";
 import loginschema from "../loginschema";
@@ -80,11 +79,10 @@ function LoginForm(props) {
           props.history.push('/all-posts');
         })
         .catch(err => {
-          console.log(err);
-          setLoginErrors({...loginErrors, password:'You entered an incorrect username or password.'};
-        });
-      });
-      
+          setLoginErrors({...loginErrors, password:'You entered an incorrect username or password.'});
+        }
+        );
+      };
       useEffect(() => {
       loginschema.isValid(loginFormValues).then((valid) => {
         setLoginDisabled(!valid);
