@@ -73,7 +73,8 @@ function LoginForm(props) {
         .then((res) => {
           console.log(res.data)
           localStorage.setItem("token", res.data.token);
-          props.setCurrentUsername(credentialsTest.username);
+          localStorage.setItem("currentUsernameLocalStorage", credentialsTest.username);
+          props.setCurrentUsername();
 
           console.log(props.currentUsername);
 
