@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { axiosWithAuth } from "../utils/axiosWithAuth";
 import { useParams, useHistory } from "react-router-dom";
 
-import { editPost, fetchAllPosts } from './../actions';
+import { editPost, fetchAllPosts, deletePost } from './../actions';
 
 const initialIsEditing = false;
 
@@ -70,34 +70,49 @@ function MyPost(props){
         // props.history.push("/my-posts");
     }
 
+    const deletePost = () => {
+        console.log(formValues.id);
+        props.deletePost(formValues.id);
+    }
+
     // props.key
     return(
-        <div>
+        <div className="container-outer">
             {isEditing ? (
-                <form className="form container" onSubmit={saveEdit}>
-                    <label>
-                        Image url:
-                        <input
-                            value={formValues.image}
-                            onChange={onChange}
-                            name="image"
-                            type="text"
-                        />
-                    </label>
-                    <br />
-            
-                    <label>
-                        Story: 
-                        <input
-                        value={formValues.story}
-                        onChange={onChange}
-                        name="story"
-                        type="text"
-                        />
-                    </label>
-                    <br />
-                    <button>Save</button>
-                </form>
+                // When I tried to apply to this form the styled component wrappers 
+                // used on the post itself (i.e., the PostWrapper and ImgWrapper),
+                // I was getting a bug whereby the input would immediately unfocus
+                // when one char was written in it, so I reverted to css
+                // The relevant classes are in index.css. They all correspond to the styled
+                // component wrappers established elsewhere in this component.
+                    <form className="post-wrapper" onSubmit={saveEdit}>
+                        <div className="input-wrapper">
+                            <label>
+                                Image url:
+                                    <input
+                                        value={formValues.image}
+                                        onChange={onChange}
+                                        name="image"
+                                        type="text"
+                                    />
+                            </label>
+                        </div>
+                        <div className="input-wrapper">
+                            <label>
+                                Story: 
+                                <input
+                                value={formValues.story}
+                                onChange={onChange}
+                                name="story"
+                                type="text"
+                                />
+                            </label>
+                        </div>
+                        <div className="edit-post-button">
+                            <button>Save</button>
+                        </div>
+                    </form>
+                // </PostWrapper>
             )
             : (<PostWrapper key={idx} className='post-card'>
                 <ImgWrapper>
@@ -107,7 +122,10 @@ function MyPost(props){
                     <h4>{post.user_id}</h4>
                     <p>{post.story}</p>
                 </TextContentWrapper>
-                <button onClick={() => setIsEditing(true)}>Edit Post</button>
+                <div className="edit-post-button">
+                    <button onClick={() => setIsEditing(true)}>Edit Post</button>
+                    <button onClick={deletePost}>Delete Post</button>
+                </div>
             </PostWrapper>)
             }
         </div>
@@ -122,6 +140,6 @@ function MyPost(props){
 //     }
 // };
 
-export default connect(null, {fetchAllPosts, editPost})(MyPost);
+export default connect(null, {fetchAllPosts, editPost, deletePost})(MyPost);
 
 // export default MyPost;

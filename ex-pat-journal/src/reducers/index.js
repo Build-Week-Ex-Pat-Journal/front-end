@@ -3,7 +3,8 @@ import {
     API_GET_ALL_POSTS_SUCCESS,
     API_POST_ALL_POSTS_SUCCESS,
     API_ALL_POSTS_FAIL,
-    SET_CURRENT_USERNAME
+    SET_CURRENT_USERNAME,
+    API_DELETE_MY_POST_SUCCESS
     // FORM_ERROR 
 } from '../actions';
 
@@ -43,6 +44,7 @@ const reducer = (state = initialState, action) => {
             return({
                 ...state,
                 currentUsername: localStorage.getItem("currentUsernameLocalStorage"),
+                // allPosts: action.payload,
                 allPosts: [...state.allPosts, action.payload],
                 isLoading: false,
                 error: ""
@@ -56,6 +58,15 @@ const reducer = (state = initialState, action) => {
         //         error: ""
         //         // smurfFormErrorMessage: ""
         //     });
+        case(API_DELETE_MY_POST_SUCCESS):
+            return({
+                ...state,
+                allPosts: state.allPosts.filter(post => post.id !== action.payload), 
+                // [...state.allPosts, action.payload],
+                isLoading: false,
+                error: ""
+                // smurfFormErrorMessage: ""
+            });
         case(API_ALL_POSTS_FAIL):
             return({
                 ...state,

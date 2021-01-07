@@ -9,6 +9,8 @@ export const API_ALL_POSTS_FAIL = "API_ALL_POSTS_FAIL";
 
 export const SET_CURRENT_USERNAME = "SET_CURRENT_USERNAME";
 
+export const API_DELETE_MY_POST_SUCCESS = "API_DELETE_MY_POST_SUCCESS";
+
 
 // export const FORM_ERROR = "FORM_ERROR";
 
@@ -74,11 +76,22 @@ export const editPost = (id, editedPost) => dispatch => {
         .catch(err => dispatch({type:API_ALL_POSTS_FAIL, payload:err}));
 }
 
+export const deletePost = (id) => dispatch => {
+    axiosWithAuth()
+        .delete(`https://expatjournal2021.herokuapp.com/posts/${id}`)
+        .then((res) => {
+            console.log(res);
+            // console.log(res);
+            dispatch({type:API_DELETE_MY_POST_SUCCESS, payload:id});
+        })
+        .catch(err => dispatch({type:API_ALL_POSTS_FAIL, payload:err}));
+}
+
 export const setCurrentUsername = () => {
     const currentUsernameLocalStorage = localStorage.getItem("currentUsernameLocalStorage");
 
     console.log(currentUsernameLocalStorage);
-    
+
     return {type:SET_CURRENT_USERNAME, payload:currentUsernameLocalStorage};
 }
 
