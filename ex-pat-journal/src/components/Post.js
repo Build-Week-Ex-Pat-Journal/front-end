@@ -3,13 +3,11 @@ import styled from 'styled-components'
 import ReadMoreReact from 'read-more-react';
 import '../Post.css';
 
-const initialIsEditing = false;
 const minLength = 80;
 const idealLength = 100;
 const maxLength = 2000;
 
 function Post(props){
-    const [isEditing, setIsEditing] = useState(initialIsEditing)
     const {post, id} = props
 
 
@@ -39,25 +37,28 @@ function Post(props){
     padding-bottom: 5%`
 
     return(
-        isEditing ? <p>A Post Form</p> 
-        
-        :
-                    <PostWrapper key={id} className='post-card'>
-                        <h4 className="username-header">Post by {post.user_id}:</h4>
-                        <ImgWrapper>
-                            <img src={post.image} alt="uploaded" style={{maxWidth: "100%"}}/>
-                        </ImgWrapper>
-                        <TextContentWrapper>
-                            {/* <h4>{post.user_id}</h4> */}
+        <PostWrapper key={id} className='post-card'>
+            <h4 className="username-header">Post by {post.user_id}:</h4>
+            {
+                post.image ? 
+                (
+                    <ImgWrapper>
+                        <img src={post.image} alt="uploaded" style={{maxWidth: "100%"}}/>
+                    </ImgWrapper>
+                )
+                : null
+            }
+            <TextContentWrapper>
+                {/* <h4>{post.user_id}</h4> */}
 
-                            <ReadMoreReact text={post.story}
-                            min={minLength}
-                            ideal={idealLength}
-                            max={maxLength}
-                            readMoreText='Click Here to Read More, Click Again to Collapse'/>
+                <ReadMoreReact text={post.story}
+                min={minLength}
+                ideal={idealLength}
+                max={maxLength}
+                readMoreText='Click Here to Read More, Click Again to Collapse'/>
 
-                        </TextContentWrapper>
-                    </PostWrapper>
+            </TextContentWrapper>
+        </PostWrapper>
     )
 }
 
