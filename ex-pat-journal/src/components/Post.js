@@ -48,11 +48,13 @@ function Post(props){
                         </ImgWrapper>
                         <TextContentWrapper>
                             <h4>{post.user_id}</h4>
+
                             <ReadMoreReact text={post.story}
                             min={minLength}
                             ideal={idealLength}
                             max={maxLength}
                             readMoreText='Click Here to Read More, Click Again to Collapse'/>
+
                         </TextContentWrapper>
                     </PostWrapper>
     )
