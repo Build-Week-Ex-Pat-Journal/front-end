@@ -40,8 +40,8 @@ export const addPost = (newPost) => dispatch => {
         // user_id instead of username?
     // }
 
-    console.log(newPost);
-    
+    // console.log(newPost);
+
     axiosWithAuth()
         .post("https://expatjournal2021.herokuapp.com/posts/", newPost)
         .then((res) => {
@@ -51,8 +51,35 @@ export const addPost = (newPost) => dispatch => {
         .catch(err => dispatch({type:API_ALL_POSTS_FAIL, payload:err}));
 }
 
-export const setCurrentUsername = (username) => {
-    return {type:SET_CURRENT_USERNAME, payload:username};
+export const fetchMyPosts = (user_id) => dispatch => {
+    dispatch({type:API_ALL_POSTS_START});
+
+    axiosWithAuth()
+        .get(`https://expatjournal2021.herokuapp.com/${user_id}/posts/`)
+        .then(res => {
+            // console.log(res.data);
+            dispatch({type:API_GET_ALL_POSTS_SUCCESS, payload:res.data});
+        })
+        .catch(err => dispatch({type:API_ALL_POSTS_FAIL, payload:err}));
+}
+
+export const editPost = (id, editedPost) => dispatch => {
+    
+    axiosWithAuth()
+        .put(`https://expatjournal2021.herokuapp.com/posts/${id}`, editedPost)
+        .then((res) => {
+            console.log(res);
+            dispatch({type:API_POST_ALL_POSTS_SUCCESS, payload:editedPost});
+        })
+        .catch(err => dispatch({type:API_ALL_POSTS_FAIL, payload:err}));
+}
+
+export const setCurrentUsername = () => {
+    const currentUsernameLocalStorage = localStorage.getItem("currentUsernameLocalStorage");
+
+    console.log(currentUsernameLocalStorage);
+    
+    return {type:SET_CURRENT_USERNAME, payload:currentUsernameLocalStorage};
 }
 
 

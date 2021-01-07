@@ -12,6 +12,7 @@ const NavBar = (props) => {
 
   const logout = () => {
     localStorage.removeItem("token");
+    localStorage.removeItem("currentUsernameLocalStorage");
     // props.history.push("/");
   };
   return (

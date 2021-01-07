@@ -34,6 +34,7 @@ const reducer = (state = initialState, action) => {
         case(API_GET_ALL_POSTS_SUCCESS):
             return({
                 ...state,
+                currentUsername: localStorage.getItem("currentUsernameLocalStorage"),
                 allPosts: action.payload,
                 isLoading: false,
                 error: ""
@@ -41,14 +42,24 @@ const reducer = (state = initialState, action) => {
         case(API_POST_ALL_POSTS_SUCCESS):
             return({
                 ...state,
+                currentUsername: localStorage.getItem("currentUsernameLocalStorage"),
                 allPosts: [...state.allPosts, action.payload],
                 isLoading: false,
                 error: ""
                 // smurfFormErrorMessage: ""
             });
+        // case(API_PUT_MY_POSTS_SUCCESS):
+        //     return({
+        //         ...state,
+        //         allPosts: [...state.allPosts, action.payload],
+        //         isLoading: false,
+        //         error: ""
+        //         // smurfFormErrorMessage: ""
+        //     });
         case(API_ALL_POSTS_FAIL):
             return({
                 ...state,
+                currentUsername: localStorage.getItem("currentUsernameLocalStorage"),
                 isLoading: false,
                 error: action.payload
             });

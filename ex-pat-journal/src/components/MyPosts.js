@@ -3,7 +3,7 @@ import MyPost from './MyPost';
 import { connect } from 'react-redux';
 import styled from 'styled-components'
 
-// import {  fetchAllPosts, addPost, setCurrentUsername } from './../actions';
+// import {  fetchMyPosts, editPost, fetchAllPosts, addPost, setCurrentUsername } from './../actions';
 
 import { fetchAllPosts } from './../actions';
 
@@ -11,14 +11,11 @@ import { fetchAllPosts } from './../actions';
 
 function MyPosts(props) {
     // console.log(props)
-    // const { fetchAllPosts } = props;
 
     useEffect(() => {
         props.fetchAllPosts();
-            // .then(res => {
-            //     console.log(res);
 
-            // })
+        // props.fetchMyPosts(props.currentUsername);
     }, [])
 
 
@@ -41,9 +38,10 @@ function MyPosts(props) {
             <PostsWrapper>
             {
                 props.isLoading ? (<div>Loading</div>) 
-                : (props.allPosts.map((post, id) => (
+                : (props.allPosts.map((post, idx) => (
+                    // <MyPost key={id} post={post}/>
                     post.user_id === props.currentUsername ? 
-                    <MyPost key={id} post={post}/>
+                    <MyPost key={idx} post={post}/>
                     : null
                 )))  
             }

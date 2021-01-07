@@ -10,7 +10,7 @@ import { fetchAllPosts } from './../actions';
 //////////////// INITIAL STATES ////////////////
 
 function Posts(props) {
-    // console.log(props)
+    console.log(props)
     // const { fetchAllPosts } = props;
 
     useEffect(() => {

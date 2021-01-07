@@ -26,7 +26,11 @@ function App() {
         <Route exact path="/register" component={RegisterForm} />
         <PrivateRoute path="/all-posts" component={Posts} />
         <PrivateRoute path="/new-post" component={NewPostForm} />
+        {/* <PrivateRoute path="/my-posts" component={MyPosts} /> */}
+{/*  /:userid/posts
+ */}
         <PrivateRoute path="/my-posts" component={MyPosts} />
+        {/* <PrivateRoute path="/posts/:id" component={MyPosts} /> */}
       </Switch>
     </Router>
   </div>
