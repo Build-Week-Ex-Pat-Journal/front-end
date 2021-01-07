@@ -1,7 +1,12 @@
 import React, { useState } from "react";
 import styled from 'styled-components'
+import ReadMoreReact from 'read-more-react';
+import '../Post.css';
 
 const initialIsEditing = false;
+const minLength = 80;
+const idealLength = 100;
+const maxLength = 2000;
 
 function Post(props){
     const [isEditing, setIsEditing] = useState(initialIsEditing)
@@ -30,7 +35,8 @@ function Post(props){
     `
     const TextContentWrapper = styled.div`
     padding-right: 5%;
-    padding-left: 5%;`
+    padding-left: 5%;
+    padding-bottom: 5%`
 
     return(
         isEditing ? <p>A Post Form</p> 
@@ -42,7 +48,13 @@ function Post(props){
                         </ImgWrapper>
                         <TextContentWrapper>
                             <h4>{post.user_id}</h4>
-                            <p>{post.story}</p>
+
+                            <ReadMoreReact text={post.story}
+                            min={minLength}
+                            ideal={idealLength}
+                            max={maxLength}
+                            readMoreText='Click Here to Read More, Click Again to Collapse'/>
+
                         </TextContentWrapper>
                     </PostWrapper>
     )
