@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Post from './Post';
 import { connect } from 'react-redux';
 import styled from 'styled-components'
+// import {v4 as uuid} from "uuid";
 
 // import {  fetchAllPosts, addPost, setCurrentUsername } from './../actions';
 
@@ -12,6 +13,7 @@ import { fetchAllPosts } from './../actions';
 function Posts(props) {
     console.log(props)
     // const { fetchAllPosts } = props;
+    // const { allPosts } = props;
 
     useEffect(() => {
         props.fetchAllPosts();

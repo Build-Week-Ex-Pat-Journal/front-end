@@ -14,6 +14,7 @@ const initialFormValues = {
 
 function NewPostForm(props) {
 
+  const [submitted, setSubmitted] = useState(false);
   const [formValues, setFormValues] = useState(initialFormValues);
   
   const onChange = (evt) => {
@@ -26,8 +27,12 @@ function NewPostForm(props) {
   }
 
   const onSubmit = e => {
+      // if (submitted) {
+      //   return;
+      // }
+      // setSubmitted(true)
       e.preventDefault();
-      
+      e.stopPropagation();
       const newPost = {
           user_id: props.currentUsername,
           ...formValues
@@ -63,7 +68,7 @@ function NewPostForm(props) {
           </label>
           <br />
 
-          <button>Post</button>
+          <button disabled={submitted}>Post</button>
         </form>
     </div>
   )

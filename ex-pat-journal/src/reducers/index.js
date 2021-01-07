@@ -24,6 +24,7 @@ const reducer = (state = initialState, action) => {
                 error: ""
             });
         case(API_GET_ALL_POSTS_SUCCESS):
+            console.log(action.payload);
             return({
                 ...state,
                 currentUsername: localStorage.getItem("currentUsernameLocalStorage"),
@@ -32,6 +33,7 @@ const reducer = (state = initialState, action) => {
                 error: ""
             });
         case(API_POST_ALL_POSTS_SUCCESS):
+            console.log(action.payload);
             return({
                 ...state,
                 currentUsername: localStorage.getItem("currentUsernameLocalStorage"),
@@ -41,11 +43,11 @@ const reducer = (state = initialState, action) => {
             });
 
         case(API_PUT_MY_POSTS_SUCCESS):
-            const editedArray = state.allPosts.filter(post => post.id !== action.payload.id).push(action.payload);
-
+            const otherThan = state.allPosts.filter(post => post.id !== action.payload.id);
+            const editedArray3 = [...otherThan, action.payload];
             return({
                 ...state,
-                allposts: editedArray,
+                allPosts: editedArray3,
                 isLoading: false,
                 error: ""
             });
