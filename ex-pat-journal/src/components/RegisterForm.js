@@ -35,38 +35,60 @@ function RegisterForm(props) {
     initialRegisterFormValues
   );
 
+
   //////////////// EVENT HANDLERS ////////////////
 
-  const registerInputChange = (name, value) => {
-    yup
-      .reach(registerschema, name)
-      .validate(value) // validate this value
-      .then(() => {
-        // happy path and clear the error
-        setRegisterErrors({
-          ...registerErrors,
-          [name]: "",
-        });
-      })
-      // if the validation is unsuccessful, we can set the error message to the message
-      // returned from yup (that we created in our schema)
-      .catch((err) => {
-        setRegisterErrors({
-          ...registerErrors,
-          // validation error from schema
-          [name]: err.errors[0],
-        });
-      });
+//  const registerInputChange = (name, value) => {
+  // // debugger
+  //   setRegisterFormValues(
+  //     prev => {
+  //       return ({
+  //         ...prev,
+  //         [name]: value, // NOT AN ARRAY
+  //       })
+  //     }
+  //   )
+  //   console.log('fresh', freshState)
 
-    setRegisterFormValues({
-      ...registerFormValues,
-      [name]: value, // NOT AN ARRAY
-    });
-  };
+    
+
+  
+  //   console.log('registerInputChange: ', registerFormValues);
+  // };
 
   const onChange = (evt) => {
+   // debugger
     const { name, value } = evt.target;
-    registerInputChange(name, value);
+    setRegisterFormValues( prev => {
+      return ({
+        ...prev,
+        [name]: value, // NOT AN ARRAY
+      })
+    })
+
+    yup
+    .reach(registerschema, name)
+    .validate(value) // validate this value
+    .then(() => {
+      console.log("reach: ",registerFormValues)
+      // happy path and clear the error
+      setRegisterErrors({
+        ...registerErrors,
+        [name]: "",
+      });
+    })
+    // if the validation is unsuccessful, we can set the error message to the message
+    // returned from yup (that we created in our schema)
+    .catch((err) => {
+      setRegisterErrors({
+        ...registerErrors,
+        // validation error from schema
+        [name]: err.errors[0],
+      });
+     });
+   // registerInputChange(name, value);
+    
+    console.log('onChange: ', registerFormValues)
   };
 
   const register = (e) => {
@@ -99,7 +121,10 @@ function RegisterForm(props) {
   useEffect(() => {
     registerschema.isValid(registerFormValues).then((valid) => {
       setRegisterDisabled(!valid);
-    });
+      valid && setRegisterErrors(initialRegisterErrors) 
+      console.log('useeffect', registerFormValues)
+    })
+    .catch();
   }, [registerFormValues]);
 
   return (
@@ -189,6 +214,7 @@ function RegisterForm(props) {
     </StyledRegister>
   );
 }
+
 
 export default RegisterForm;
 
