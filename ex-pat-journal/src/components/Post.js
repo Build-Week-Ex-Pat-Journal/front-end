@@ -43,11 +43,12 @@ function Post(props){
         
         :
                     <PostWrapper key={id} className='post-card'>
+                        <h4 className="username-header">Post by {post.user_id}:</h4>
                         <ImgWrapper>
                             <img src={post.image} alt="uploaded" style={{maxWidth: "100%"}}/>
                         </ImgWrapper>
                         <TextContentWrapper>
-                            <h4>{post.user_id}</h4>
+                            {/* <h4>{post.user_id}</h4> */}
 
                             <ReadMoreReact text={post.story}
                             min={minLength}
