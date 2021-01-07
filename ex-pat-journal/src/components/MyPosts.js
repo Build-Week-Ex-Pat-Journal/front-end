@@ -10,12 +10,8 @@ import { fetchAllPosts } from './../actions';
 //////////////// INITIAL STATES ////////////////
 
 function MyPosts(props) {
-    // console.log(props)
-
     useEffect(() => {
         props.fetchAllPosts();
-
-        // props.fetchMyPosts(props.currentUsername);
     }, [])
 
 
@@ -59,18 +55,3 @@ const mapStateToProps = state => {
 };
 
 export default connect(mapStateToProps, {fetchAllPosts})(MyPosts);
-
-// {
-//     allPosts: [
-//         {
-//             username: "",
-//             photo: "",
-//             story: ""
-//         }
-//     ]
-// }
-
-
-// export default Posts;
-
-{/* <Posts currentUser={currentUser} setCurrentUser={setCurrentUser} currentPost={currentPost} setCurrentPost={setCurrentPost} posts={posts} setPosts={setPosts} userList={userList} setUserList={setUserList}/>  */}

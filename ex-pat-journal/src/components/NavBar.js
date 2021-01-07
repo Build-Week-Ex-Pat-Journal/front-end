@@ -8,12 +8,9 @@ import { Link } from "react-router-dom";
 // import { border, palette } from '@material-ui/system';
 
 const NavBar = (props) => {
-  // console.log(props.theme);
-
   const logout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("currentUsernameLocalStorage");
-    // props.history.push("/");
   };
   return (
     <AppBar

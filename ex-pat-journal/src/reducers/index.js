@@ -4,24 +4,15 @@ import {
     API_POST_ALL_POSTS_SUCCESS,
     API_ALL_POSTS_FAIL,
     SET_CURRENT_USERNAME,
-    API_DELETE_MY_POST_SUCCESS
-    // FORM_ERROR 
+    API_DELETE_MY_POST_SUCCESS,
+    API_PUT_MY_POSTS_SUCCESS
 } from '../actions';
-
-// export const initialState = {
-//     smurfs: [],
-//     isLoading: false,
-//     error: "",
-//     smurfFormErrorMessage: ""
-// }
 
 export const initialState = {
     currentUsername: "",
     allPosts: [],
     isLoading: false,
     error: ""
-
-    // smurfFormErrorMessage: ""
 }
 
 const reducer = (state = initialState, action) => {
@@ -44,28 +35,26 @@ const reducer = (state = initialState, action) => {
             return({
                 ...state,
                 currentUsername: localStorage.getItem("currentUsernameLocalStorage"),
-                // allPosts: action.payload,
                 allPosts: [...state.allPosts, action.payload],
                 isLoading: false,
                 error: ""
-                // smurfFormErrorMessage: ""
             });
-        // case(API_PUT_MY_POSTS_SUCCESS):
-        //     return({
-        //         ...state,
-        //         allPosts: [...state.allPosts, action.payload],
-        //         isLoading: false,
-        //         error: ""
-        //         // smurfFormErrorMessage: ""
-        //     });
+
+        case(API_PUT_MY_POSTS_SUCCESS):
+            const editedArray = state.allPosts.filter(post => post.id !== action.payload.id).push(action.payload);
+
+            return({
+                ...state,
+                allposts: editedArray,
+                isLoading: false,
+                error: ""
+            });
         case(API_DELETE_MY_POST_SUCCESS):
             return({
                 ...state,
-                allPosts: state.allPosts.filter(post => post.id !== action.payload), 
-                // [...state.allPosts, action.payload],
+                allPosts: state.allPosts.filter(post => post.id !== action.payload),
                 isLoading: false,
                 error: ""
-                // smurfFormErrorMessage: ""
             });
         case(API_ALL_POSTS_FAIL):
             return({
@@ -79,12 +68,6 @@ const reducer = (state = initialState, action) => {
                 ...state,
                 currentUsername: action.payload
             })
-        // case(FORM_ERROR):
-        //     return({
-        //         ...state,
-        //         isLoading: false,
-        //         smurfFormErrorMessage: action.payload
-        //     });
         default:
             return state;
     }

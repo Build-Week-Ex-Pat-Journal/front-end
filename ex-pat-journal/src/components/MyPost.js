@@ -8,18 +8,10 @@ import { editPost, fetchAllPosts, deletePost } from './../actions';
 
 const initialIsEditing = false;
 
-// const initialFormValues = {
-//     user_id: "",
-//     image: "",
-//     story: ""
-// }
-
 function MyPost(props){
     const [formValues, setFormValues] = useState(props.post);
     const [isEditing, setIsEditing] = useState(initialIsEditing)
     const {post, idx} = props;
-    const { id } = useParams();
-
 
     const PostWrapper = styled.div`
     border: 2px solid black;
@@ -48,7 +40,6 @@ function MyPost(props){
 
     const onChange = (evt) => {
         const { name, value } = evt.target;
-    
         setFormValues({
           ...formValues,
           [name]: value
@@ -57,17 +48,11 @@ function MyPost(props){
 
     const saveEdit = e => {
         e.preventDefault();
-
         const editedPost = {
             ...formValues
         }
-        // console.log(editedPost);
-        // console.log(editedPost.id);
-        // console.log(id);
-
         props.editPost(editedPost.id, editedPost);
         props.fetchAllPosts(props.currentUsername);
-        // props.history.push("/my-posts");
     }
 
     const deletePost = () => {
@@ -75,7 +60,6 @@ function MyPost(props){
         props.deletePost(formValues.id);
     }
 
-    // props.key
     return(
         <div className="container-outer">
             {isEditing ? (
@@ -112,7 +96,6 @@ function MyPost(props){
                             <button>Save</button>
                         </div>
                     </form>
-                // </PostWrapper>
             )
             : (<PostWrapper key={idx} className='post-card'>
                 <ImgWrapper>
@@ -132,14 +115,4 @@ function MyPost(props){
     )
 }
 
-// const mapStateToProps = state => {
-//     return {
-//         isLoading: state.isLoading,
-//         allPosts: state.allPosts,
-//         currentUsername: state.currentUsername
-//     }
-// };
-
 export default connect(null, {fetchAllPosts, editPost, deletePost})(MyPost);
-
-// export default MyPost;
