@@ -2,7 +2,7 @@
 
 ## Using the website
 
-Deployed project link: https://front-end-nine-sooty.vercel.app/all-posts
+Deployed project link: https://front-end-nine-sooty.vercel.app/
 
 This is the front-end of the Expat Journal app built by tt_webft_34 for the build week of 1/1/21 to 1/8/21.
 
