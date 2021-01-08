@@ -18,7 +18,7 @@ function App() {
     <StyledApp>
       <Router>
         <NavBar />
-        <StyledH1>😎Ex-Pat Journal🤙 </StyledH1>
+        <StyledH1>😎Expat Journal🤙 </StyledH1>
         <Switch>
           <Route exact path="/" component={LoginForm} />
           <Route exact path="/register" component={RegisterForm} />
