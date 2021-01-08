@@ -40,7 +40,13 @@ function Post(props){
 
     return(
         <PostWrapper key={id} className='post-card'>
-            <h4 className="username-header">Post by {post.user_id}:</h4>
+            <h4
+                style={{
+                fontFamily: "Permanent Marker, cursive",
+                color: "#2f4f4f",
+                fontSize: "1.9rem",
+                }}
+            >Post by {post.user_id}:</h4>
             {
                 post.image ? 
                 (
@@ -51,18 +57,18 @@ function Post(props){
                 : null
             }
             <TextContentWrapper>
-                {/* <h4>{post.user_id}</h4> */}
-
-                <ReadMoreReact text={post.story}
-                min={minLength}
-                ideal={idealLength}
-                max={maxLength}
-                readMoreText='Click Here to Read More, Click Again to Collapse'/>
-
+                <StylePost>
+                    <ReadMoreReact
+                    text={post.story}
+                    min={minLength}
+                    ideal={idealLength}
+                    max={maxLength}
+                    readMoreText="Click Here to Read More, Click Again to Collapse"
+                    />
+                </StylePost>
             </TextContentWrapper>
         </PostWrapper>
     )
-
 }
 
 export default Post;
