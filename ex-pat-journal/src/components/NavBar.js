@@ -69,6 +69,7 @@ const StyledNavi = styled.div`
     transition: 1s ease-in;
     padding: 10px;
     border-radius: 30%;
+    max-width:100%;
 
     &:hover {
       background-color: firebrick;
