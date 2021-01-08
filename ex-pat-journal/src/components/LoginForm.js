@@ -70,8 +70,13 @@ function LoginForm(props) {
     axios
       .post("https://expatjournal2021.herokuapp.com/api/login", credentialsTest)
       .then((res) => {
-        localStorage.setItem("token", res.data);
-        props.setCurrentUsername(credentialsTest.username);
+        console.log(res.data);
+        localStorage.setItem("token", res.data.token);
+        localStorage.setItem(
+          "currentUsernameLocalStorage",
+          credentialsTest.username
+        );
+        props.setCurrentUsername();
 
         console.log(props.currentUsername);
 
@@ -89,6 +94,7 @@ function LoginForm(props) {
       setLoginDisabled(!valid);
     });
   }, [loginFormValues]);
+
   useEffect(() => {}, [loginErrors]);
 
   return (

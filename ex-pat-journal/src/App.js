@@ -7,26 +7,51 @@ import RegisterForm from "./components/RegisterForm";
 import NavBar from "./components/NavBar";
 import PrivateRoute from "./components/PrivateRoute";
 import NewPostForm from "./components/NewPostForm";
-
+import styled from "styled-components";
 import axios from "axios";
 
 import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
+import MyPosts from "./components/MyPosts";
 
 function App() {
   return (
-    <div>
-      <h1>Ex-Pat Journal</h1>
+    <StyledApp>
       <Router>
         <NavBar />
+        <StyledH1>😎Ex-Pat Journal🤙 </StyledH1>
         <Switch>
           <Route exact path="/" component={LoginForm} />
           <Route exact path="/register" component={RegisterForm} />
           <PrivateRoute path="/all-posts" component={Posts} />
           <PrivateRoute path="/new-post" component={NewPostForm} />
+          <PrivateRoute path="/my-posts" component={MyPosts} />
         </Switch>
       </Router>
-    </div>
+    </StyledApp>
   );
 }
 
 export default App;
+
+const StyledH1 = styled.h1`
+  color: ${(pr) => pr.theme.titleColor};
+  text-align: center;
+  font-size: 8rem;
+  border: 2px magenta dashed;
+  padding: ${(pr) => pr.theme.padding.large};
+  margin: 2% auto;
+  text-shadow: 5px 2px magenta;
+  text-decoration: underline;
+  background-color: thistle;
+  font-family: "Hanalei Fill", cursive;
+  &:hover {
+    text-shadow: 5px 2px ${(pr) => pr.theme.titleColor};
+    color: magenta;
+    border: 2px ${(pr) => pr.theme.titleColor} dashed;
+    background-color: firebrick;
+  }
+`;
+
+const StyledApp = styled.div`
+  background-color: #f0f8ff;
+`;

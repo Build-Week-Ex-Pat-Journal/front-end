@@ -215,7 +215,9 @@ const StyledRegister = styled.div`
     text-align: center;
     text-decoration: underline;
     color: ${(pr) => pr.theme.titleColor};
-    font-size: 5em;
+    font-size: 5.5rem;
+    font-family: "Permanent Marker", cursive;
+    text-shadow: 2px 2.5px magenta;
   }
   .name {
     display: flex;
@@ -223,6 +225,7 @@ const StyledRegister = styled.div`
     margin: 2% auto;
     width: 50%;
     text-align: center;
+    font-size: 20px;
   }
   button {
     background-color: ${(pr) => pr.theme.btnColor};
