@@ -19,12 +19,16 @@ function MyPosts(props) {
     const PostsWrapper = styled.div`
     display: flex;
     flex-direction: row;
-    flex-wrap: wrap;    
+    flex-wrap: wrap;
     `
+
+  
     const PageWrapper = styled.div`
     width: 100%;
     h2 {
         margin-left:5%;
+        font-size: 3rem;
+        font-family: "Permanent Marker", cursive;
     }
     `
 

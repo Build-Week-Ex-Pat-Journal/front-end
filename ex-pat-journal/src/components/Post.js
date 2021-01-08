@@ -38,13 +38,20 @@ function Post(props){
 
     padding-bottom: 5%`
 
+    const StylePost = styled.div`
+    font-size: 1.5rem;
+    color: #2f4f4f;
+    font-family: "Caveat", cursive;
+  `;
+
     return(
         <PostWrapper key={id} className='post-card'>
             <h4
                 style={{
                 fontFamily: "Permanent Marker, cursive",
                 color: "#2f4f4f",
-                fontSize: "1.9rem",
+                fontSize: "1.6rem",
+                paddingLeft: "5%",
                 }}
             >Post by {post.user_id}:</h4>
             {
@@ -73,8 +80,4 @@ function Post(props){
 
 export default Post;
 
-const StylePost = styled.div`
-  font-size: 2rem;
-  color: #2f4f4f;
-  font-family: "Caveat", cursive;
-`;
+

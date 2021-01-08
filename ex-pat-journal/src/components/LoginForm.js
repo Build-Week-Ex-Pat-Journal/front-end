@@ -162,6 +162,11 @@ const StyledLogin = styled.div`
     width: 50%;
     margin: 0 auto;
     padding: ${(pr) => pr.theme.padding.small};
+    @media (max-width: 800px) {
+      margin: 5% auto;
+      max-width:100%;
+      width: 100%;
+    }
   }
   .name,
   .register {

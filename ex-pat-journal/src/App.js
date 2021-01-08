@@ -39,7 +39,7 @@ const StyledH1 = styled.h1`
   font-size: 8rem;
   border: 2px magenta dashed;
   padding: ${(pr) => pr.theme.padding.large};
-  margin: 2% auto;
+  margin: 5% auto;
   text-shadow: 5px 2px magenta;
   text-decoration: underline;
   background-color: thistle;
@@ -50,6 +50,11 @@ const StyledH1 = styled.h1`
     border: 2px ${(pr) => pr.theme.titleColor} dashed;
     background-color: firebrick;
   }
+    @media (max-width: 1000px) {
+      font-size: 5rem;}
+  @media (max-width: 500px) {
+    font-size: 2.5rem;
+  margin: 10% auto;}
 `;
 
 const StyledApp = styled.div`
