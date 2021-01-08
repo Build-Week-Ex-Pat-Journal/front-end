@@ -91,7 +91,7 @@ function MyPost(props){
                 // component wrappers established elsewhere in this component.
                     <form className="post-wrapper" onSubmit={saveEdit}>
                         <div className="input-wrapper">
-                            <label>
+                            <label className = "input-label">
                                 Image url:
                                     <input
                                         value={formValues.image}

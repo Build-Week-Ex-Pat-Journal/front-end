@@ -45,8 +45,8 @@ function NewPostForm(props) {
   return(
       <div className="Form">
         <form className="form container" onSubmit={onSubmit}>
-          <label>
-            Image url: 
+          <label className = 'input-label'>
+            Image URL: 
             {/* CHANGE THIS FORM WHEN WE DO IT FOR IMAGES: */}
             <input
               value={formValues.image}
@@ -57,13 +57,13 @@ function NewPostForm(props) {
           </label>
           <br />
 
-          <label>
+          <label className = 'input-label'>
             Story: 
-            <input
+            <textarea
               value={formValues.story}
               onChange={onChange}
               name="story"
-              type="text"
+              rows="10"
             />
           </label>
           <br />

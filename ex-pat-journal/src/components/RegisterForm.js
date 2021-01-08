@@ -244,6 +244,11 @@ const StyledRegister = styled.div`
     font-size: 5.5rem;
     font-family: "Permanent Marker", cursive;
     text-shadow: 2px 2.5px magenta;
+    @media (max-width: 1000px) {
+      font-size: 4rem;}
+    @media (max-width: 500px) {
+        font-size: 3rem;}
+    }
   }
   .name {
     display: flex;
