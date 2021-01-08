@@ -17,6 +17,8 @@ code {
   box-shadow: 5px 10px #888888;
   margin: 5% auto;
   /* width: 30%; */
+  /* border: dotted; */
+  word-wrap:break-word;
   border-radius:10px;
   @media (max-width: 1800px) {
       margin: 5% auto;
@@ -38,7 +40,10 @@ code {
 }
 
 .container-outer {
-  width: 60%;
+  width: 90%;
+  /* border: dotted; */
+  margin-left: 5%;
+  margin-right: 5%;
   @media (max-width: 1800px) {
       margin: 5% auto;
       width: 40%;
@@ -56,4 +61,29 @@ code {
   padding-left: 5%;
   margin-bottom: 5%;
   margin-top: 5%;
+}
+
+.delete {
+  color: black;
+  /* top: 50%; */
+  left: 75.2%;
+  width: 20%;
+  text-align: center;
+  position: relative;
+  float: right;
+  background-color: rgb(216, 87, 87);
+  padding: 6px 12px;
+  margin-top: 2%;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.delete-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.username-header {
+  margin-left: 5%;
 }

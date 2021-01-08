@@ -13,29 +13,29 @@ function MyPost(props){
     const [isEditing, setIsEditing] = useState(initialIsEditing)
     const {post, idx} = props;
 
-    const PostWrapper = styled.div`
-    border: 2px solid black;
-    box-shadow: 5px 10px #888888;
-    margin: 5% auto;
-    width: 30%;
-    border-radius:10px;
-    @media (max-width: 1800px) {
-        margin: 5% auto;
-        width: 40%;
-    }
-    @media (max-width: 1300px) {
-        margin: 5% auto;
-        width: 80%;
-    }
-    `
-    const ImgWrapper = styled.div`
-    width: 90%;
-    text-align: center;
-    margin: 2% auto;
-    `
-    const TextContentWrapper = styled.div`
-    padding-right: 5%;
-    padding-left: 5%;`
+    // const PostWrapper = styled.div`
+    // border: 2px solid black;
+    // box-shadow: 5px 10px #888888;
+    // margin: 5% auto;
+    // width: 30%;
+    // border-radius:10px;
+    // @media (max-width: 1800px) {
+    //     margin: 5% auto;
+    //     width: 40%;
+    // }
+    // @media (max-width: 1300px) {
+    //     margin: 5% auto;
+    //     width: 80%;
+    // }
+    // `
+    // const ImgWrapper = styled.div`
+    // width: 90%;
+    // text-align: center;
+    // margin: 2% auto;
+    // `
+    // const TextContentWrapper = styled.div`
+    // padding-right: 5%;
+    // padding-left: 5%;`
 
 
     const onChange = (evt) => {
@@ -58,6 +58,26 @@ function MyPost(props){
     const deletePost = () => {
         console.log(formValues.id);
         props.deletePost(formValues.id);
+    }
+
+    const deleteImg = e => {
+        const editedPost = {
+            ...formValues,
+            image: ""
+        }
+        props.editPost(editedPost.id, editedPost);
+        props.fetchAllPosts(props.currentUsername);
+        setFormValues(editedPost);
+    }
+
+    const deleteStory = e => {
+        const editedPost = {
+            ...formValues,
+            story: ""
+        }
+        props.editPost(editedPost.id, editedPost);
+        props.fetchAllPosts(props.currentUsername);
+        setFormValues(editedPost);
     }
 
     return(
@@ -97,19 +117,45 @@ function MyPost(props){
                         </div>
                     </form>
             )
-            : (<PostWrapper key={idx} className='post-card'>
-                <ImgWrapper>
-                    <img src={post.image} alt="uploaded" style={{maxWidth: "100%"}}/>
-                </ImgWrapper>
-                <TextContentWrapper>
-                    <h4>{post.user_id}</h4>
-                    <p>{post.story}</p>
-                </TextContentWrapper>
+            : (<div key={idx} className="post-wrapper">
+                <h4 className="username-header">Post by {post.user_id}:</h4>
+                {formValues.image ?
+                    <div className="input-wrapper">
+                        <div className="delete-container">
+                            <img src={post.image} alt="uploaded" style={{maxWidth: "100%"}}/>
+                            <span className="delete" onClick={e => {
+                                        e.stopPropagation();
+                                        deleteImg();
+                                    }
+                                    }>
+                                    Delete Image
+                            </span>
+                        </div>
+                    </div>
+                    : null
+                }
+                <div className="input-wrapper">
+                    {/* style={{"display": "flex", "justifyContent": "space-between"}} */}
+                    {
+                        formValues.story ?
+                        <div className="delete-container">
+                            <p>{post.story}</p>
+                            <span className="delete" onClick={e => {
+                                            e.stopPropagation();
+                                            deleteStory()
+                                        }
+                                        }>
+                                    Delete Story
+                            </span>
+                        </div>
+                        : null
+                    }
+                </div>
                 <div className="edit-post-button">
                     <button onClick={() => setIsEditing(true)}>Edit Post</button>
                     <button onClick={deletePost}>Delete Post</button>
                 </div>
-            </PostWrapper>)
+            </div>)
             }
         </div>
     )
