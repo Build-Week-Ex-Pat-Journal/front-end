@@ -90,6 +90,7 @@ code {
   margin-bottom: 5%;
   margin-top: 5%;
   
+  
 }
 
 .container-outer {
@@ -105,6 +106,13 @@ code {
       margin: 5% auto;
       width: 80%;
   }
+}
+
+.input-label {
+  font-family: Permanent Marker, cursive;
+  color: #2f4f4f;
+  font-size: 1.6rem;
+  padding-left: 5%;
 }
 
 .edit-post-button {
